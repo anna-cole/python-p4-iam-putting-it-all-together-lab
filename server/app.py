@@ -77,13 +77,13 @@ class RecipeIndex(Resource):
         instructions = request.get_json().get('instructions')
         minutes_to_complete = request.get_json().get('minutes_to_complete')
 
-        try:
+        try: # you can use try except instead of if else, it's better because less prone to errors
             recipe = Recipe(title=title, instructions=instructions, minutes_to_complete=minutes_to_complete, user_id=session['user_id'])
             db.session.add(recipe)
             db.session.commit()
             return recipe.to_dict(), 201
         
-        except IntegrityError:
+        except IntegrityError: # dont forget to import it
             return {'error': '422 Unprocessable Entity'}, 422
     
 
